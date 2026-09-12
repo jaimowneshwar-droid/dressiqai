@@ -164,7 +164,7 @@ export function SideMenu({ open, onClose }: { open: boolean; onClose: () => void
   ];
 
   if (session) {
-    links.push({ label: 'My Profile', path: '/profile' });
+    links.push({ label: 'My profile', path: '/profile' });
   } else {
     links.push({ label: 'Sign In', path: '/login' });
     links.push({ label: 'Sign Up', path: '/signup' });
