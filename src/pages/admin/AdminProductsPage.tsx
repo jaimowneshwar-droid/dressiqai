@@ -145,6 +145,7 @@ export function AdminProductsPage() {
           <Textarea label="Description" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} />
           <MultiImageUpload value={form.images} onChange={(urls) => setForm({ ...form, images: urls })} />
 
+          {/* Sizes */}
           <div>
             <label className="block text-sm font-medium text-zinc-300 mb-1.5">Sizes</label>
             <div className="flex flex-wrap gap-2 mb-2">
@@ -161,6 +162,7 @@ export function AdminProductsPage() {
             </div>
           </div>
 
+          {/* Colors */}
           <div>
             <label className="block text-sm font-medium text-zinc-300 mb-1.5">Colors</label>
             <div className="flex flex-wrap gap-2 mb-2">

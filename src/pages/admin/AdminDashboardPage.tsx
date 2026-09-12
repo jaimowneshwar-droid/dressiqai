@@ -60,6 +60,7 @@ export function AdminDashboardPage() {
         <p className="text-sm text-zinc-500 mt-1">Here's what's happening in your store</p>
       </div>
 
+      {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
         {cards.map((card) => (
           <div key={card.label} className="bg-zinc-900 rounded-xl border border-zinc-800 p-4">
@@ -72,6 +73,7 @@ export function AdminDashboardPage() {
         ))}
       </div>
 
+      {/* Recent Orders */}
       <div className="bg-zinc-900 rounded-xl border border-zinc-800 p-4">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-base font-bold text-white">Recent Orders</h3>
@@ -94,7 +96,7 @@ export function AdminDashboardPage() {
                     order.status === 'completed' ? 'bg-green-500/20 text-green-400' :
                     order.status === 'cancelled' ? 'bg-red-500/20 text-red-400' :
                     'bg-blue-500/20 text-blue-400'
-  )}>
+                  )}>
                     {order.status}
                   </span>
                 </div>
