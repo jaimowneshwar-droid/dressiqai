@@ -33,25 +33,12 @@ export function AIOutfitPage() {
       const timeoutId = setTimeout(() => controller.abort(), 90000);
       const res = await fetch(apiUrl, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-        },
-        body: JSON.stringify({
-          mode: 'outfit',
-          budget: form.budget,
-          occasion: form.occasion,
-          style: form.style,
-          season: form.season,
-          preferences: form.preferences,
-        }),
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}` },
+        body: JSON.stringify({ mode: 'outfit', budget: form.budget, occasion: form.occasion, style: form.style, season: form.season, preferences: form.preferences }),
         signal: controller.signal,
       });
       clearTimeout(timeoutId);
-      if (!res.ok) {
-        const errData = await res.json().catch(() => null);
-        throw new Error(errData?.error || 'Request failed');
-      }
+      if (!res.ok) { const errData = await res.json().catch(() => null); throw new Error(errData?.error || 'Request failed'); }
       const data = await res.json();
       if (data.error) throw new Error(data.error);
       setResult(data as OutfitResult);
@@ -65,9 +52,7 @@ export function AIOutfitPage() {
   return (
     <div className="min-h-screen bg-black text-white">
       <div className="px-4 py-3 flex items-center gap-2">
-        <button onClick={() => navigate('/')} className="text-zinc-400">
-          <ChevronLeft size={22} />
-        </button>
+        <button onClick={() => navigate('/')} className="text-zinc-400"><ChevronLeft size={22} /></button>
         <h1 className="text-lg font-bold">AI Outfit Planner</h1>
       </div>
 
@@ -88,14 +73,8 @@ export function AIOutfitPage() {
               <label className="block text-sm font-medium text-zinc-300 mb-1.5">Budget (₹)</label>
               <div className="relative">
                 <IndianRupee size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
-                <input
-                  type="number"
-                  required
-                  value={form.budget}
-                  onChange={(e) => setForm({ ...form, budget: e.target.value })}
-                  placeholder="5000"
-                  className="w-full rounded-xl border border-zinc-700 bg-zinc-800 pl-10 pr-4 py-2.5 text-white placeholder:text-zinc-500 focus:border-amber-500 focus:outline-none transition"
-                />
+                <input type="number" required value={form.budget} onChange={(e) => setForm({ ...form, budget: e.target.value })} placeholder="5000"
+                  className="w-full rounded-xl border border-zinc-700 bg-zinc-800 pl-10 pr-4 py-2.5 text-white placeholder:text-zinc-500 focus:border-amber-500 focus:outline-none transition" />
               </div>
             </div>
 
@@ -103,17 +82,8 @@ export function AIOutfitPage() {
               <label className="block text-sm font-medium text-zinc-300 mb-1.5">Occasion</label>
               <div className="flex flex-wrap gap-2">
                 {OCCASIONS.map((occ) => (
-                  <button
-                    key={occ}
-                    type="button"
-                    onClick={() => setForm({ ...form, occasion: occ })}
-                    className={classNames(
-                      'px-3 py-1.5 rounded-full text-sm font-medium transition',
-                      form.occasion === occ ? 'bg-amber-500 text-black' : 'bg-zinc-800 text-zinc-400'
-                    )}
-                  >
-                    {occ}
-                  </button>
+                  <button key={occ} type="button" onClick={() => setForm({ ...form, occasion: occ })}
+                    className={classNames('px-3 py-1.5 rounded-full text-sm font-medium transition', form.occasion === occ ? 'bg-amber-500 text-black' : 'bg-zinc-800 text-zinc-400')}>{occ}</button>
                 ))}
               </div>
             </div>
@@ -122,17 +92,8 @@ export function AIOutfitPage() {
               <label className="block text-sm font-medium text-zinc-300 mb-1.5">Style Preference</label>
               <div className="flex flex-wrap gap-2">
                 {STYLES.map((stl) => (
-                  <button
-                    key={stl}
-                    type="button"
-                    onClick={() => setForm({ ...form, style: stl })}
-                    className={classNames(
-                      'px-3 py-1.5 rounded-full text-sm font-medium transition',
-                      form.style === stl ? 'bg-amber-500 text-black' : 'bg-zinc-800 text-zinc-400'
-                    )}
-                  >
-                    {stl}
-                  </button>
+                  <button key={stl} type="button" onClick={() => setForm({ ...form, style: stl })}
+                    className={classNames('px-3 py-1.5 rounded-full text-sm font-medium transition', form.style === stl ? 'bg-amber-500 text-black' : 'bg-zinc-800 text-zinc-400')}>{stl}</button>
                 ))}
               </div>
             </div>
@@ -141,29 +102,16 @@ export function AIOutfitPage() {
               <label className="block text-sm font-medium text-zinc-300 mb-1.5">Season</label>
               <div className="grid grid-cols-4 gap-2">
                 {['summer', 'winter', 'monsoon', 'spring'].map((s) => (
-                  <button
-                    key={s}
-                    type="button"
-                    onClick={() => setForm({ ...form, season: s })}
-                    className={classNames(
-                      'px-3 py-2 rounded-lg text-sm font-medium capitalize transition',
-                      form.season === s ? 'bg-amber-500 text-black' : 'bg-zinc-800 text-zinc-400'
-                    )}
-                  >
-                    {s}
-                  </button>
+                  <button key={s} type="button" onClick={() => setForm({ ...form, season: s })}
+                    className={classNames('px-3 py-2 rounded-lg text-sm font-medium capitalize transition', form.season === s ? 'bg-amber-500 text-black' : 'bg-zinc-800 text-zinc-400')}>{s}</button>
                 ))}
               </div>
             </div>
 
             <div>
               <label className="block text-sm font-medium text-zinc-300 mb-1.5">Color / Other Preferences (optional)</label>
-              <input
-                value={form.preferences}
-                onChange={(e) => setForm({ ...form, preferences: e.target.value })}
-                placeholder="e.g. prefer dark colors, cotton fabric"
-                className="w-full rounded-xl border border-zinc-700 bg-zinc-800 px-4 py-2.5 text-white placeholder:text-zinc-500 focus:border-amber-500 focus:outline-none transition"
-              />
+              <input value={form.preferences} onChange={(e) => setForm({ ...form, preferences: e.target.value })} placeholder="e.g. prefer dark colors, cotton fabric"
+                className="w-full rounded-xl border border-zinc-700 bg-zinc-800 px-4 py-2.5 text-white placeholder:text-zinc-500 focus:border-amber-500 focus:outline-none transition" />
             </div>
           </div>
 
@@ -175,9 +123,7 @@ export function AIOutfitPage() {
         {error && (
           <div className="mt-4 space-y-3">
             <p className="text-sm text-red-400 bg-red-500/10 rounded-lg p-3 text-center">{error}</p>
-            <Button variant="outline" onClick={() => getOutfit({ preventDefault: () => {} } as React.FormEvent)} className="w-full" size="lg">
-              Try Again
-            </Button>
+            <Button variant="outline" onClick={() => getOutfit({ preventDefault: () => {} } as React.FormEvent)} className="w-full" size="lg">Try Again</Button>
           </div>
         )}
 
@@ -222,9 +168,7 @@ export function AIOutfitPage() {
               </div>
             )}
 
-            <Button onClick={() => navigate('/shop')} className="w-full" size="lg">
-              Find These Items
-            </Button>
+            <Button onClick={() => navigate('/shop')} className="w-full" size="lg">Find These Items</Button>
           </div>
         )}
       </div>

@@ -31,25 +31,12 @@ export function AISizePage() {
       const timeoutId = setTimeout(() => controller.abort(), 90000);
       const res = await fetch(apiUrl, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-        },
-        body: JSON.stringify({
-          mode: 'size',
-          height: form.height,
-          weight: form.weight,
-          age: form.age,
-          gender: form.gender,
-          bodyType: form.bodyType,
-        }),
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}` },
+        body: JSON.stringify({ mode: 'size', height: form.height, weight: form.weight, age: form.age, gender: form.gender, bodyType: form.bodyType }),
         signal: controller.signal,
       });
       clearTimeout(timeoutId);
-      if (!res.ok) {
-        const errData = await res.json().catch(() => null);
-        throw new Error(errData?.error || 'Request failed');
-      }
+      if (!res.ok) { const errData = await res.json().catch(() => null); throw new Error(errData?.error || 'Request failed'); }
       const data = await res.json();
       if (data.error) throw new Error(data.error);
       setResult(data as SizeResult);
@@ -63,9 +50,7 @@ export function AISizePage() {
   return (
     <div className="min-h-screen bg-black text-white">
       <div className="px-4 py-3 flex items-center gap-2">
-        <button onClick={() => navigate('/')} className="text-zinc-400">
-          <ChevronLeft size={22} />
-        </button>
+        <button onClick={() => navigate('/')} className="text-zinc-400"><ChevronLeft size={22} /></button>
         <h1 className="text-lg font-bold">AI Size Finder</h1>
       </div>
 
@@ -83,45 +68,16 @@ export function AISizePage() {
         <form onSubmit={getRecommendation} className="space-y-4">
           <div className="bg-zinc-900 rounded-xl p-4 border border-zinc-800 space-y-3">
             <div className="grid grid-cols-2 gap-3">
-              <Input
-                label="Height (cm)"
-                type="number"
-                required
-                value={form.height}
-                onChange={(e) => setForm({ ...form, height: e.target.value })}
-                placeholder="175"
-              />
-              <Input
-                label="Weight (kg)"
-                type="number"
-                required
-                value={form.weight}
-                onChange={(e) => setForm({ ...form, weight: e.target.value })}
-                placeholder="70"
-              />
+              <Input label="Height (cm)" type="number" required value={form.height} onChange={(e) => setForm({ ...form, height: e.target.value })} placeholder="175" />
+              <Input label="Weight (kg)" type="number" required value={form.weight} onChange={(e) => setForm({ ...form, weight: e.target.value })} placeholder="70" />
             </div>
-            <Input
-              label="Age (optional)"
-              type="number"
-              value={form.age}
-              onChange={(e) => setForm({ ...form, age: e.target.value })}
-              placeholder="25"
-            />
+            <Input label="Age (optional)" type="number" value={form.age} onChange={(e) => setForm({ ...form, age: e.target.value })} placeholder="25" />
             <div>
               <label className="block text-sm font-medium text-zinc-300 mb-1.5">Gender</label>
               <div className="grid grid-cols-2 gap-2">
                 {['male', 'female'].map((g) => (
-                  <button
-                    key={g}
-                    type="button"
-                    onClick={() => setForm({ ...form, gender: g })}
-                    className={classNames(
-                      'px-3 py-2.5 rounded-lg text-sm font-medium capitalize transition',
-                      form.gender === g ? 'bg-amber-500 text-black' : 'bg-zinc-800 text-zinc-400'
-                    )}
-                  >
-                    {g}
-                  </button>
+                  <button key={g} type="button" onClick={() => setForm({ ...form, gender: g })}
+                    className={classNames('px-3 py-2.5 rounded-lg text-sm font-medium capitalize transition', form.gender === g ? 'bg-amber-500 text-black' : 'bg-zinc-800 text-zinc-400')}>{g}</button>
                 ))}
               </div>
             </div>
@@ -129,17 +85,8 @@ export function AISizePage() {
               <label className="block text-sm font-medium text-zinc-300 mb-1.5">Body Type</label>
               <div className="grid grid-cols-3 gap-2">
                 {['slim', 'regular', 'athletic'].map((bt) => (
-                  <button
-                    key={bt}
-                    type="button"
-                    onClick={() => setForm({ ...form, bodyType: bt })}
-                    className={classNames(
-                      'px-3 py-2.5 rounded-lg text-sm font-medium capitalize transition',
-                      form.bodyType === bt ? 'bg-amber-500 text-black' : 'bg-zinc-800 text-zinc-400'
-                    )}
-                  >
-                    {bt}
-                  </button>
+                  <button key={bt} type="button" onClick={() => setForm({ ...form, bodyType: bt })}
+                    className={classNames('px-3 py-2.5 rounded-lg text-sm font-medium capitalize transition', form.bodyType === bt ? 'bg-amber-500 text-black' : 'bg-zinc-800 text-zinc-400')}>{bt}</button>
                 ))}
               </div>
             </div>
@@ -153,9 +100,7 @@ export function AISizePage() {
         {error && (
           <div className="mt-4 space-y-3">
             <p className="text-sm text-red-400 bg-red-500/10 rounded-lg p-3 text-center">{error}</p>
-            <Button variant="outline" onClick={() => getRecommendation({ preventDefault: () => {} } as React.FormEvent)} className="w-full" size="lg">
-              Try Again
-            </Button>
+            <Button variant="outline" onClick={() => getRecommendation({ preventDefault: () => {} } as React.FormEvent)} className="w-full" size="lg">Try Again</Button>
           </div>
         )}
 
@@ -191,9 +136,7 @@ export function AISizePage() {
               </div>
             )}
 
-            <Button onClick={() => navigate('/shop')} className="w-full" size="lg">
-              Shop Now
-            </Button>
+            <Button onClick={() => navigate('/shop')} className="w-full" size="lg">Shop Now</Button>
           </div>
         )}
       </div>
