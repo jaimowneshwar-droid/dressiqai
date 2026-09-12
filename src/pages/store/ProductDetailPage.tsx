@@ -104,14 +104,12 @@ export function ProductDetailPage({ slug }: { slug: string }) {
 
   return (
     <div className="pb-6">
-      {/* Back */}
       <div className="px-4 py-3">
         <button onClick={() => window.history.back()} className="flex items-center gap-1 text-zinc-400 text-sm">
           <ChevronLeft size={18} /> Back
         </button>
       </div>
 
-      {/* Images */}
       <div className="relative aspect-square bg-zinc-900 overflow-hidden">
         {product.images[imageIdx] ? (
           <img src={product.images[imageIdx]} alt={product.name} className="w-full h-full object-cover" />
@@ -150,7 +148,6 @@ export function ProductDetailPage({ slug }: { slug: string }) {
         </div>
       )}
 
-      {/* Info */}
       <div className="px-4 py-4 space-y-4">
         <div>
           {product.category && (
@@ -163,11 +160,7 @@ export function ProductDetailPage({ slug }: { slug: string }) {
             <div className="flex items-center gap-1 mt-1">
               <div className="flex">
                 {[1, 2, 3, 4, 5].map((s) => (
-                  <Star
-                    key={s}
-                    size={14}
-                    className={s <= Math.round(product.rating) ? 'fill-amber-500 text-amber-500' : 'text-zinc-700'}
-                  />
+                  <Star key={s} size={14} className={s <= Math.round(product.rating) ? 'fill-amber-500 text-amber-500' : 'text-zinc-700'} />
                 ))}
               </div>
               <span className="text-xs text-zinc-400">{product.rating.toFixed(1)} ({product.review_count} reviews)</span>
@@ -187,7 +180,6 @@ export function ProductDetailPage({ slug }: { slug: string }) {
           )}
         </div>
 
-        {/* Sizes */}
         {product.sizes.length > 0 && (
           <div>
             <div className="flex items-center justify-between mb-2">
@@ -198,43 +190,27 @@ export function ProductDetailPage({ slug }: { slug: string }) {
             </div>
             <div className="flex flex-wrap gap-2">
               {product.sizes.map((size) => (
-                <button
-                  key={size}
-                  onClick={() => setSelectedSize(size)}
-                  className={classNames(
-                    'min-w-10 px-3 py-2 rounded-lg text-sm font-medium transition',
-                    selectedSize === size ? 'bg-amber-500 text-black' : 'bg-zinc-900 text-zinc-400 border border-zinc-800'
-                  )}
-                >
-                  {size}
-                </button>
+                <button key={size} onClick={() => setSelectedSize(size)}
+                  className={classNames('min-w-10 px-3 py-2 rounded-lg text-sm font-medium transition',
+                    selectedSize === size ? 'bg-amber-500 text-black' : 'bg-zinc-900 text-zinc-400 border border-zinc-800')}>{size}</button>
               ))}
             </div>
           </div>
         )}
 
-        {/* Colors */}
         {product.colors.length > 0 && (
           <div>
             <p className="text-sm font-medium text-zinc-300 mb-2">Color</p>
             <div className="flex flex-wrap gap-2">
               {product.colors.map((color) => (
-                <button
-                  key={color}
-                  onClick={() => setSelectedColor(color)}
-                  className={classNames(
-                    'px-3 py-2 rounded-lg text-sm font-medium transition',
-                    selectedColor === color ? 'bg-amber-500 text-black' : 'bg-zinc-900 text-zinc-400 border border-zinc-800'
-                  )}
-                >
-                  {color}
-                </button>
+                <button key={color} onClick={() => setSelectedColor(color)}
+                  className={classNames('px-3 py-2 rounded-lg text-sm font-medium transition',
+                    selectedColor === color ? 'bg-amber-500 text-black' : 'bg-zinc-900 text-zinc-400 border border-zinc-800')}>{color}</button>
               ))}
             </div>
           </div>
         )}
 
-        {/* Stock */}
         <div>
           {product.stock > 0 ? (
             <span className="text-sm text-green-500 font-medium">In Stock ({product.stock} available)</span>
@@ -243,43 +219,16 @@ export function ProductDetailPage({ slug }: { slug: string }) {
           )}
         </div>
 
-        {/* Quantity + Add to Cart + Buy Now */}
         <div className="flex items-center gap-3">
           <div className="flex items-center bg-zinc-900 rounded-xl border border-zinc-800">
-            <button
-              onClick={() => setQty((q) => Math.max(1, q - 1))}
-              className="p-2.5 text-zinc-400 hover:text-white"
-            >
-              <Minus size={18} />
-            </button>
+            <button onClick={() => setQty((q) => Math.max(1, q - 1))} className="p-2.5 text-zinc-400 hover:text-white"><Minus size={18} /></button>
             <span className="px-4 text-white font-semibold">{qty}</span>
-            <button
-              onClick={() => setQty((q) => q + 1)}
-              className="p-2.5 text-zinc-400 hover:text-white"
-            >
-              <Plus size={18} />
-            </button>
+            <button onClick={() => setQty((q) => q + 1)} className="p-2.5 text-zinc-400 hover:text-white"><Plus size={18} /></button>
           </div>
-          <Button
-            onClick={handleAddToCart}
-            disabled={product.stock === 0}
-            className="flex-1"
-            size="lg"
-          >
-            {added ? 'Added!' : 'Add to Cart'}
-          </Button>
+          <Button onClick={handleAddToCart} disabled={product.stock === 0} className="flex-1" size="lg">{added ? 'Added!' : 'Add to Cart'}</Button>
         </div>
-        <Button
-          onClick={handleBuyNow}
-          disabled={product.stock === 0}
-          variant="secondary"
-          className="w-full"
-          size="lg"
-        >
-          Buy Now
-        </Button>
+        <Button onClick={handleBuyNow} disabled={product.stock === 0} variant="secondary" className="w-full" size="lg">Buy Now</Button>
 
-        {/* Description */}
         {product.description && (
           <div className="pt-2">
             <h3 className="text-sm font-bold text-white mb-2">Description</h3>
@@ -287,7 +236,6 @@ export function ProductDetailPage({ slug }: { slug: string }) {
           </div>
         )}
 
-        {/* Trust badges */}
         <div className="grid grid-cols-3 gap-2 pt-2">
           {[
             { icon: Truck, label: 'Fast Shipping' },
@@ -301,16 +249,10 @@ export function ProductDetailPage({ slug }: { slug: string }) {
           ))}
         </div>
 
-        {/* Reviews */}
         <div className="pt-4 border-t border-zinc-800">
           <div className="flex items-center justify-between mb-3">
             <h3 className="text-base font-bold text-white">Reviews ({reviews.length})</h3>
-            <button
-              onClick={() => setShowReviewForm(!showReviewForm)}
-              className="text-amber-400 text-sm font-medium"
-            >
-              Write a Review
-            </button>
+            <button onClick={() => setShowReviewForm(!showReviewForm)} className="text-amber-400 text-sm font-medium">Write a Review</button>
           </div>
 
           {showReviewForm && (
@@ -327,15 +269,8 @@ export function ProductDetailPage({ slug }: { slug: string }) {
                     <label className="block text-sm font-medium text-zinc-300 mb-2">Rating</label>
                     <div className="flex gap-1">
                       {[1, 2, 3, 4, 5].map((s) => (
-                        <button
-                          key={s}
-                          type="button"
-                          onClick={() => setReviewForm({ ...reviewForm, rating: s })}
-                        >
-                          <Star
-                            size={24}
-                            className={s <= reviewForm.rating ? 'fill-amber-500 text-amber-500' : 'text-zinc-700'}
-                          />
+                        <button key={s} type="button" onClick={() => setReviewForm({ ...reviewForm, rating: s })}>
+                          <Star size={24} className={s <= reviewForm.rating ? 'fill-amber-500 text-amber-500' : 'text-zinc-700'} />
                         </button>
                       ))}
                     </div>
@@ -370,14 +305,11 @@ export function ProductDetailPage({ slug }: { slug: string }) {
           )}
         </div>
 
-        {/* Related */}
         {related.length > 0 && (
           <div className="pt-4 border-t border-zinc-800">
             <h3 className="text-base font-bold text-white mb-3">You May Also Like</h3>
             <div className="grid grid-cols-2 gap-3">
-              {related.map((p) => (
-                <ProductCard key={p.id} product={p} currency={settings.currency_symbol} />
-              ))}
+              {related.map((p) => <ProductCard key={p.id} product={p} currency={settings.currency_symbol} />)}
             </div>
           </div>
         )}
