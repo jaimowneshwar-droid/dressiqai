@@ -1,0 +1,7 @@
+[functions.ai-stylist]
+verify_jwt = false
+entrypoint = "./functions/ai-stylist/index.ts"
+
+[functions.razorpay-payment]
+verify_jwt = false
+entrypoint = "./functions/razorpay-payment/index.ts"
