@@ -75,28 +75,16 @@ export function OrderTrackingPage() {
       <form onSubmit={trackOrder} className="px-4 py-4">
         <div className="flex gap-2">
           <div className="flex-1">
-            <Input
-              value={orderNumber}
-              onChange={(e) => setOrderNumber(e.target.value)}
-              placeholder="DQ-20260907-12345 or your email"
-              required
-            />
+            <Input value={orderNumber} onChange={(e) => setOrderNumber(e.target.value)} placeholder="DQ-20260907-12345 or your email" required />
           </div>
-          <Button type="submit" disabled={loading} size="lg">
-            {loading ? '...' : <Search size={18} />}
-          </Button>
+          <Button type="submit" disabled={loading} size="lg">{loading ? '...' : <Search size={18} />}</Button>
         </div>
       </form>
 
-      {error && (
-        <div className="px-4">
-          <p className="text-sm text-red-400 bg-red-500/10 rounded-lg p-3 text-center">{error}</p>
-        </div>
-      )}
+      {error && <div className="px-4"><p className="text-sm text-red-400 bg-red-500/10 rounded-lg p-3 text-center">{error}</p></div>}
 
       {order && !error && (
         <div className="px-4 space-y-4">
-          {/* Order Info */}
           <div className="bg-zinc-900 rounded-xl p-4 border border-zinc-800">
             <div className="flex items-center justify-between mb-3">
               <div>
@@ -109,17 +97,13 @@ export function OrderTrackingPage() {
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <span className={classNames(
-                'text-xs font-semibold px-3 py-1 rounded-full',
-                isCancelled ? 'bg-red-500/20 text-red-400' : 'bg-amber-500/20 text-amber-400'
-              )}>
+              <span className={classNames('text-xs font-semibold px-3 py-1 rounded-full', isCancelled ? 'bg-red-500/20 text-red-400' : 'bg-amber-500/20 text-amber-400')}>
                 {STATUS_LABELS[order.status] || order.status}
               </span>
               <span className="text-xs text-zinc-500">{order.payment_method === 'cod' ? 'Cash on Delivery' : 'Online Payment'}</span>
             </div>
           </div>
 
-          {/* Tracking Steps */}
           {!isCancelled && (
             <div className="bg-zinc-900 rounded-xl p-4 border border-zinc-800">
               <div className="space-y-0">
@@ -130,23 +114,14 @@ export function OrderTrackingPage() {
                   return (
                     <div key={step} className="flex gap-3">
                       <div className="flex flex-col items-center">
-                        <div className={classNames(
-                          'h-10 w-10 rounded-full flex items-center justify-center border-2 transition',
-                          done ? 'bg-amber-500 border-amber-500' : 'bg-zinc-800 border-zinc-700'
-                        )}>
+                        <div className={classNames('h-10 w-10 rounded-full flex items-center justify-center border-2 transition', done ? 'bg-amber-500 border-amber-500' : 'bg-zinc-800 border-zinc-700')}>
                           <Icon size={18} className={done ? 'text-black' : 'text-zinc-600'} />
                         </div>
-                        {!isLast && (
-                          <div className={classNames('w-0.5 h-8', done ? 'bg-amber-500' : 'bg-zinc-800')} />
-                        )}
+                        {!isLast && <div className={classNames('w-0.5 h-8', done ? 'bg-amber-500' : 'bg-zinc-800')} />}
                       </div>
                       <div className="pt-2">
-                        <p className={classNames('text-sm font-medium', done ? 'text-white' : 'text-zinc-600')}>
-                          {STATUS_LABELS[step]}
-                        </p>
-                        {i === currentStep && (
-                          <p className="text-xs text-amber-400 mt-0.5">Current status</p>
-                        )}
+                        <p className={classNames('text-sm font-medium', done ? 'text-white' : 'text-zinc-600')}>{STATUS_LABELS[step]}</p>
+                        {i === currentStep && <p className="text-xs text-amber-400 mt-0.5">Current status</p>}
                       </div>
                     </div>
                   );
@@ -155,7 +130,6 @@ export function OrderTrackingPage() {
             </div>
           )}
 
-          {/* Shipping Address */}
           <div className="bg-zinc-900 rounded-xl p-4 border border-zinc-800">
             <h3 className="text-sm font-bold text-white flex items-center gap-2 mb-3">
               <MapPin size={16} className="text-amber-500" /> Shipping Address
@@ -168,7 +142,6 @@ export function OrderTrackingPage() {
             </div>
           </div>
 
-          {/* Order Items */}
           <div className="bg-zinc-900 rounded-xl p-4 border border-zinc-800">
             <h3 className="text-sm font-bold text-white mb-3">Items ({order.items.length})</h3>
             <div className="space-y-3">
@@ -179,9 +152,7 @@ export function OrderTrackingPage() {
                   </div>
                   <div className="flex-1">
                     <p className="text-sm font-medium text-white">{item.name}</p>
-                    {(item.size || item.color) && (
-                      <p className="text-xs text-zinc-500">{[item.size, item.color].filter(Boolean).join(' / ')}</p>
-                    )}
+                    {(item.size || item.color) && <p className="text-xs text-zinc-500">{[item.size, item.color].filter(Boolean).join(' / ')}</p>}
                     <p className="text-xs text-zinc-400">Qty: {item.quantity}</p>
                   </div>
                 </div>

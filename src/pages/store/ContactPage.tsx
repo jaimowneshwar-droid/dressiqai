@@ -56,9 +56,7 @@ export function ContactPage() {
                 <p className="text-xs text-zinc-500">Phone{phoneEntries.length > 1 ? 's' : ''}</p>
                 <div className="mt-0.5 space-y-1">
                   {phoneEntries.map((phone, i) => (
-                    <a key={i} href={`tel:${phone.replace(/\s/g, '')}`} className="block text-sm text-white font-medium hover:text-amber-400 transition">
-                      {phone}
-                    </a>
+                    <a key={i} href={`tel:${phone.replace(/\s/g, '')}`} className="block text-sm text-white font-medium hover:text-amber-400 transition">{phone}</a>
                   ))}
                 </div>
               </div>
@@ -79,22 +77,12 @@ export function ContactPage() {
         {(whatsappLink || instagramLink) && (
           <div className="grid grid-cols-2 gap-3">
             {whatsappLink && (
-              <a
-                href={whatsappLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 bg-green-500 text-white font-semibold rounded-xl px-4 py-3 hover:bg-green-400 transition active:scale-95"
-              >
+              <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-green-500 text-white font-semibold rounded-xl px-4 py-3 hover:bg-green-400 transition active:scale-95">
                 <MessageCircle size={18} /> WhatsApp
               </a>
             )}
             {instagramLink && (
-              <a
-                href={instagramLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 bg-gradient-to-r from-pink-500 to-purple-500 text-white font-semibold rounded-xl px-4 py-3 hover:opacity-90 transition active:scale-95"
-              >
+              <a href={instagramLink} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-gradient-to-r from-pink-500 to-purple-500 text-white font-semibold rounded-xl px-4 py-3 hover:opacity-90 transition active:scale-95">
                 <Instagram size={18} /> Instagram
               </a>
             )}
@@ -103,46 +91,20 @@ export function ContactPage() {
 
         <form onSubmit={handleSubmit} className="bg-zinc-900 rounded-xl p-4 border border-zinc-800 space-y-3">
           <h3 className="text-base font-bold text-white">Send a Message</h3>
-          {sent && (
-            <p className="text-green-500 text-sm bg-green-500/10 rounded-lg p-2 text-center">
-              Message sent! We'll get back to you soon.
-            </p>
-          )}
+          {sent && <p className="text-green-500 text-sm bg-green-500/10 rounded-lg p-2 text-center">Message sent! We'll get back to you soon.</p>}
           <div>
             <label className="block text-sm font-medium text-zinc-300 mb-1.5">Name</label>
-            <input
-              required
-              value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
-              className="w-full rounded-xl border border-zinc-700 bg-zinc-800 px-4 py-2.5 text-white placeholder:text-zinc-500 focus:border-amber-500 focus:outline-none transition"
-              placeholder="Your name"
-            />
+            <input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="w-full rounded-xl border border-zinc-700 bg-zinc-800 px-4 py-2.5 text-white placeholder:text-zinc-500 focus:border-amber-500 focus:outline-none transition" placeholder="Your name" />
           </div>
           <div>
             <label className="block text-sm font-medium text-zinc-300 mb-1.5">Email</label>
-            <input
-              required
-              type="email"
-              value={form.email}
-              onChange={(e) => setForm({ ...form, email: e.target.value })}
-              className="w-full rounded-xl border border-zinc-700 bg-zinc-800 px-4 py-2.5 text-white placeholder:text-zinc-500 focus:border-amber-500 focus:outline-none transition"
-              placeholder="you@example.com"
-            />
+            <input required type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="w-full rounded-xl border border-zinc-700 bg-zinc-800 px-4 py-2.5 text-white placeholder:text-zinc-500 focus:border-amber-500 focus:outline-none transition" placeholder="you@example.com" />
           </div>
           <div>
             <label className="block text-sm font-medium text-zinc-300 mb-1.5">Message</label>
-            <textarea
-              required
-              value={form.message}
-              onChange={(e) => setForm({ ...form, message: e.target.value })}
-              className="w-full rounded-xl border border-zinc-700 bg-zinc-800 px-4 py-2.5 text-white placeholder:text-zinc-500 focus:border-amber-500 focus:outline-none transition min-h-[100px] resize-y"
-              placeholder="How can we help?"
-            />
+            <textarea required value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} className="w-full rounded-xl border border-zinc-700 bg-zinc-800 px-4 py-2.5 text-white placeholder:text-zinc-500 focus:border-amber-500 focus:outline-none transition min-h-[100px] resize-y" placeholder="How can we help?" />
           </div>
-          <button
-            type="submit"
-            className="w-full inline-flex items-center justify-center gap-2 bg-amber-500 text-black font-semibold rounded-xl px-5 py-3 hover:bg-amber-400 transition active:scale-95"
-          >
+          <button type="submit" className="w-full inline-flex items-center justify-center gap-2 bg-amber-500 text-black font-semibold rounded-xl px-5 py-3 hover:bg-amber-400 transition active:scale-95">
             <Send size={16} /> Send Message
           </button>
         </form>
@@ -207,23 +169,13 @@ export function AIStylistPage() {
 
         {whatsappLink ? (
           <>
-            <a
-              href={whatsappLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full inline-flex items-center justify-center gap-2.5 bg-green-500 text-white font-semibold rounded-xl px-5 py-4 hover:bg-green-400 transition active:scale-95 text-base"
-            >
-              <MessageCircle size={22} />
-              Chat with us on WhatsApp
+            <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="w-full inline-flex items-center justify-center gap-2.5 bg-green-500 text-white font-semibold rounded-xl px-5 py-4 hover:bg-green-400 transition active:scale-95 text-base">
+              <MessageCircle size={22} /> Chat with us on WhatsApp
             </a>
-            <p className="text-xs text-zinc-600 text-center">
-              Tapping the button opens WhatsApp with a pre-filled message so our team can help you faster.
-            </p>
+            <p className="text-xs text-zinc-600 text-center">Tapping the button opens WhatsApp with a pre-filled message so our team can help you faster.</p>
           </>
         ) : (
-          <p className="text-sm text-zinc-500 text-center bg-zinc-900 rounded-xl p-4 border border-zinc-800">
-            WhatsApp contact is not configured yet. Please check back later.
-          </p>
+          <p className="text-sm text-zinc-500 text-center bg-zinc-900 rounded-xl p-4 border border-zinc-800">WhatsApp contact is not configured yet. Please check back later.</p>
         )}
       </div>
     </div>

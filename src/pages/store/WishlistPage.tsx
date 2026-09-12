@@ -35,11 +35,7 @@ export function WishlistPage() {
 
       {items.length === 0 ? (
         <div className="py-10">
-          <EmptyState
-            icon={<Heart size={48} />}
-            title="Your wishlist is empty"
-            subtitle="Save items you love by tapping the heart icon"
-          />
+          <EmptyState icon={<Heart size={48} />} title="Your wishlist is empty" subtitle="Save items you love by tapping the heart icon" />
           <div className="text-center mt-4">
             <Button onClick={() => navigate('/shop')}>Browse Products</Button>
           </div>
@@ -48,40 +44,20 @@ export function WishlistPage() {
         <div className="px-4 space-y-3">
           {items.map((item) => (
             <div key={item.id} className="flex gap-3 bg-zinc-900 rounded-xl p-3 border border-zinc-800">
-              <button
-                onClick={() => navigate(`/product/${item.product?.slug}`)}
-                className="h-20 w-20 rounded-lg overflow-hidden bg-zinc-800 shrink-0"
-              >
-                {item.product?.images[0] ? (
-                  <img src={item.product.images[0]} alt={item.product.name} className="w-full h-full object-cover" />
-                ) : null}
+              <button onClick={() => navigate(`/product/${item.product?.slug}`)} className="h-20 w-20 rounded-lg overflow-hidden bg-zinc-800 shrink-0">
+                {item.product?.images[0] ? <img src={item.product.images[0]} alt={item.product.name} className="w-full h-full object-cover" /> : null}
               </button>
               <div className="flex-1 min-w-0">
-                <button
-                  onClick={() => navigate(`/product/${item.product?.slug}`)}
-                  className="block w-full text-left"
-                >
+                <button onClick={() => navigate(`/product/${item.product?.slug}`)} className="block w-full text-left">
                   <p className="text-sm font-medium text-white truncate">{item.product?.name}</p>
-                  {(item.size || item.color) && (
-                    <p className="text-xs text-zinc-500 mt-0.5">
-                      {[item.size, item.color].filter(Boolean).join(' / ')}
-                    </p>
-                  )}
-                  <p className="text-sm font-bold text-amber-400 mt-1">
-                    {formatPrice(item.product?.price ?? 0, settings.currency_symbol)}
-                  </p>
+                  {(item.size || item.color) && <p className="text-xs text-zinc-500 mt-0.5">{[item.size, item.color].filter(Boolean).join(' / ')}</p>}
+                  <p className="text-sm font-bold text-amber-400 mt-1">{formatPrice(item.product?.price ?? 0, settings.currency_symbol)}</p>
                 </button>
                 <div className="flex items-center gap-2 mt-2">
-                  <button
-                    onClick={() => moveToCart(item.product_id)}
-                    className="flex items-center gap-1 bg-amber-500 text-black text-xs font-semibold px-3 py-1.5 rounded-lg"
-                  >
+                  <button onClick={() => moveToCart(item.product_id)} className="flex items-center gap-1 bg-amber-500 text-black text-xs font-semibold px-3 py-1.5 rounded-lg">
                     <ShoppingBag size={14} /> Add to Cart
                   </button>
-                  <button
-                    onClick={() => item.product && toggleWishlist(item.product, item.size || undefined, item.color || undefined)}
-                    className="flex items-center gap-1 bg-zinc-800 text-zinc-400 text-xs font-medium px-3 py-1.5 rounded-lg hover:text-red-400"
-                  >
+                  <button onClick={() => item.product && toggleWishlist(item.product, item.size || undefined, item.color || undefined)} className="flex items-center gap-1 bg-zinc-800 text-zinc-400 text-xs font-medium px-3 py-1.5 rounded-lg hover:text-red-400">
                     <Trash2 size={14} /> Remove
                   </button>
                 </div>
