@@ -36,20 +36,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
+    let mounted = true;
+
+    const initializeSession = async () => {
+      const { data } = await supabase.auth.getSession();
+      if (!mounted) return;
+
       setSession(data.session);
-      if (data.session) {
-        (async () => { await checkAuth(data.session.user.id); })();
-      } else {
+      if (!data.session) {
+        setIsAdmin(false);
+        setCustomer(null);
         setLoading(false);
       }
-    });
+    };
+
+    initializeSession();
 
     const { data: listener } = supabase.auth.onAuthStateChange((_event, newSession) => {
+      if (!mounted) return;
+
+      // Only update React state here. Do not perform Supabase queries from
+      // inside the auth callback; doing so can re-enter the auth machinery
+      // and cause a recursive update/stack overflow in production.
       setSession(newSession);
-      if (newSession) {
-        (async () => { await checkAuth(newSession.user.id); })();
-      } else {
+      if (!newSession) {
         setIsAdmin(false);
         setCustomer(null);
         setLoading(false);
@@ -57,9 +67,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     });
 
     return () => {
+      mounted = false;
       listener.subscription.unsubscribe();
     };
   }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    if (!session?.user?.id) return;
+
+    setLoading(true);
+    checkAuth(session.user.id).finally(() => {
+      if (cancelled) return;
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [session?.user?.id]);
 
   async function checkAuth(userId: string) {
     const [adminRes, custRes] = await Promise.all([
